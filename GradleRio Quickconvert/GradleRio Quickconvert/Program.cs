@@ -12,7 +12,7 @@ namespace GradleRio_Quickconvert
 {
     class Program
     {
-        public const string version = "2018.1.0";
+        public const string version = "2018.1.1";
         static void Main(string[] args)
         {
             Console.Clear();
@@ -206,6 +206,8 @@ namespace GradleRio_Quickconvert
                         } else if (i == Util.TeamNumberIndex)
                         {
                             stream.WriteLine(Util.buildGradleArray[Util.TeamNumberIndex] + teamNumber);
+                        } else if (i == Util.RobotLibIndex) {
+                            if (teamNumber == "4450") stream.WriteLine(Util.buildGradleArray[Util.RobotLibIndex]);
                         } else
                         {
                             stream.WriteLine(Util.buildGradleArray[i]);

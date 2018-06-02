@@ -10,6 +10,7 @@ namespace GradleRio_Quickconvert
     {
         public const int TeamNumberIndex = 7;
         public const int RobotClassIndex = 8;
+        public const int RobotLibIndex = 42;
 
         public static string[] buildGradleArray = new string[]
         {
