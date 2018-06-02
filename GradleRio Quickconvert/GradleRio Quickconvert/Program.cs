@@ -51,35 +51,42 @@ namespace GradleRio_Quickconvert
             Console.WriteLine();
 
             string robotClass;
-
-            Dictionary<string, string> buildProps = new Dictionary<string, string>();
-            string[] lines = File.ReadAllLines("build.properties");
-
-            foreach (string line in lines)
-            {
-                string[] split = line.Split('=');
-                if (split.Length != 2) continue;
-                buildProps.Add(split[0], split[1]);
-            }
             try
             {
+                Dictionary<string, string> buildProps = new Dictionary<string, string>();
+                string[] lines = File.ReadAllLines("build.properties");
+
+                foreach (string line in lines)
+                {
+                    string[] split = line.Split('=');
+                    if (split.Length != 2) continue;
+                    buildProps.Add(split[0], split[1]);
+                }
+            
                 robotClass = buildProps["robot.class"].Replace("${package}", buildProps["package"]);
             } catch
             {
                 robotClass = "ERROR";
             }
 
-            Console.Write("The main robot class has been detected to be " + robotClass + ", is this correct? (y/n) ");
-            ConsoleKeyInfo readKey = new ConsoleKeyInfo('z', ConsoleKey.Z, false, false, false);
+            bool correct = false;
 
-            while (readKey.KeyChar != 'y' && readKey.KeyChar != 'n')
+            if (robotClass != "ERROR")
             {
-                readKey = Console.ReadKey();
+                Console.Write("The main robot class has been detected to be " + robotClass + ", is this correct? (y/n) ");
+                ConsoleKeyInfo readKey = new ConsoleKeyInfo('z', ConsoleKey.Z, false, false, false);
+
+                while (readKey.KeyChar != 'y' && readKey.KeyChar != 'n')
+                {
+                    readKey = Console.ReadKey();
+                }
+
+                Console.WriteLine();
+
+
+
+                correct = (readKey.KeyChar == 'y' ? true : false);
             }
-
-            Console.WriteLine();
-
-            bool correct = (readKey.KeyChar == 'y' ? true : false);
 
             if (!correct)
             {
