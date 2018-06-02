@@ -51,7 +51,7 @@ namespace GradleRio_Quickconvert
             "	maven { url 'https://jitpack.io' }",
             "}",
             "",
-            "// Defining my dependencies. In this case, WPILib (+ friends), CTRE Phoenix (Talon SRX), NavX, and ORF's RobotLib.",
+            "// Defining my dependencies. In this case, WPILib (+ friends), CTRE Phoenix (Talon SRX), and NavX.",
             "dependencies {",
             "    compile wpilib()",
             "    compile ctre()",
