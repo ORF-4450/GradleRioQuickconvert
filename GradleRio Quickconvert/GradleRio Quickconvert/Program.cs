@@ -12,7 +12,7 @@ namespace GradleRio_Quickconvert
 {
     class Program
     {
-        public const string version = "2018.1.1";
+        public const string version = "2018.1.2";
         static void Main(string[] args)
         {
             Console.Clear();
@@ -50,11 +50,46 @@ namespace GradleRio_Quickconvert
 
             Console.WriteLine();
 
-            Console.WriteLine("What is the main robot class? (ex. Team4450.Robot11.Robot)");
+            string robotClass;
 
-            string robotClass = Console.ReadLine();
+            Dictionary<string, string> buildProps = new Dictionary<string, string>();
+            string[] lines = File.ReadAllLines("build.properties");
+
+            foreach (string line in lines)
+            {
+                string[] split = line.Split('=');
+                if (split.Length != 2) continue;
+                buildProps.Add(split[0], split[1]);
+            }
+            try
+            {
+                robotClass = buildProps["robot.class"].Replace("${package}", buildProps["package"]);
+            } catch
+            {
+                robotClass = "ERROR";
+            }
+
+            Console.Write("The main robot class has been detected to be " + robotClass + ", is this correct? (y/n) ");
+            ConsoleKeyInfo readKey = new ConsoleKeyInfo('z', ConsoleKey.Z, false, false, false);
+
+            while (readKey.KeyChar != 'y' && readKey.KeyChar != 'n')
+            {
+                readKey = Console.ReadKey();
+            }
 
             Console.WriteLine();
+
+            bool correct = (readKey.KeyChar == 'y' ? true : false);
+
+            if (!correct)
+            {
+
+                Console.WriteLine("What is the main robot class? (ex. Team4450.Robot11.Robot)");
+
+                robotClass = Console.ReadLine();
+
+                Console.WriteLine();
+            }
 
             Console.WriteLine("Moving source files");
 
@@ -123,7 +158,7 @@ namespace GradleRio_Quickconvert
             Directory.Delete("tmp", true);
             try
             {
-                Process.Start("cmd.exe", "/c ping localhost -n 3 > nul & del " + System.Reflection.Assembly.GetEntryAssembly().Location);
+                Process.Start("cmd.exe", "/c ping localhost -n 3 > nul & del \"" + System.Reflection.Assembly.GetEntryAssembly().Location + "\"");
             }
             catch { /* Do nothing */ }
         }
