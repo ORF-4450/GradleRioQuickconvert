@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using GradleRio_Quickconvert;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -6,11 +7,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("GradleRio Quickconvert")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A conversion tool to convert 2018 Java FRC Eclipse-based projects to 2018 GradleRio-based projects.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("MoSadie / The Olympia Robotics Federation")]
 [assembly: AssemblyProduct("GradleRio Quickconvert")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright © MoSadie / The Olympia Robotics Federation 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +33,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion(Program.version)]
+[assembly: AssemblyFileVersion(Program.version)]

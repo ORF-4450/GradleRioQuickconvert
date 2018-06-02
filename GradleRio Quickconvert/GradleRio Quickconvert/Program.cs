@@ -12,16 +12,16 @@ namespace GradleRio_Quickconvert
 {
     class Program
     {
+        public const string version = "2018.1.0";
         static void Main(string[] args)
         {
             Console.Clear();
             Console.WriteLine("Welcome to the GradleRio Project Quickconvert tool!");
             Console.WriteLine("Created by MoSadie for/from FRC Team 4450.");
-
             Console.WriteLine();
             Console.WriteLine("Checking for an internet connection.");
 
-            if (!internetCheck())
+            if (!InternetCheck())
             {
                 Console.WriteLine("Unable to connect to the internet.");
                 Console.WriteLine("Please try again later. Press any key to exit.");
@@ -32,7 +32,7 @@ namespace GradleRio_Quickconvert
             Console.WriteLine("Internet connection established.");
             Console.WriteLine("Looking for eclipse robot project.");
 
-            if (!robotProjectExists())
+            if (!RobotProjectExists())
             {
                 Console.WriteLine("Unable to find eclipse-based robot project.");
                 Console.WriteLine("Make sure this program is in the root directory of your project.");
@@ -42,8 +42,8 @@ namespace GradleRio_Quickconvert
             }
 
             Console.WriteLine("Project found!");
+            Console.WriteLine("Presetup checks complete!");
             Console.WriteLine();
-            Console.WriteLine("Presetup complete!");
             Console.WriteLine("What is your team number? (ex. 4450)");
 
             string teamNumber = Console.ReadLine();
@@ -56,15 +56,11 @@ namespace GradleRio_Quickconvert
 
             Console.WriteLine();
 
-            DirectoryInfo projectRoot = new DirectoryInfo(System.AppDomain.CurrentDomain.BaseDirectory);
-
             Console.WriteLine("Moving source files");
 
             Directory.Move("src", "java");
             Directory.CreateDirectory("src/main");
             Directory.Move("java", "src/main/java");
-
-            Console.WriteLine();
 
             Console.WriteLine("Source files moved!");
 
@@ -72,7 +68,7 @@ namespace GradleRio_Quickconvert
 
             Console.WriteLine("Getting GradleRio setup.");
 
-            if (!getGradleRioSetup(teamNumber, robotClass))
+            if (!GetGradleRioSetup(teamNumber, robotClass))
             {
                 Console.WriteLine("Something went wrong getting the quickstart zip.");
                 Console.WriteLine("Please try again later. Press any key to exit.");
@@ -80,11 +76,10 @@ namespace GradleRio_Quickconvert
                 System.Environment.Exit(0);
             }
 
-            Console.WriteLine();
             Console.WriteLine("GradleRio setup complete!");
             Console.WriteLine("Now cleaning up eclipse project files.");
 
-            if (!cleanEclipseProject())
+            if (!CleanEclipseProject())
             {
                 Console.WriteLine("Something went wrong cleaning up the eclipse project.");
                 Console.WriteLine("Please try again later. Press any key to exit.");
@@ -92,11 +87,10 @@ namespace GradleRio_Quickconvert
                 System.Environment.Exit(0);
             }
 
-            Console.WriteLine();
             Console.WriteLine("Cleanup complete!");
             Console.WriteLine("Attempting to build the project.");
 
-            if (!buildProject())
+            if (!BuildProject())
             {
                 Console.WriteLine("Something went wrong attempting to building the project.");
                 Console.WriteLine("Please try again later. Press any key to exit.");
@@ -104,10 +98,9 @@ namespace GradleRio_Quickconvert
                 System.Environment.Exit(0);
             }
 
-            Console.WriteLine();
             Console.WriteLine("Test build complete! Now creating new eclipse project.");
 
-            if (!createEclipseProject())
+            if (!CreateEclipseProject())
             {
                 Console.WriteLine("Something went wrong creating the new eclipse project.");
                 Console.WriteLine("Please try again later. Press any key to exit.");
@@ -115,7 +108,7 @@ namespace GradleRio_Quickconvert
                 System.Environment.Exit(0);
             }
 
-            Console.WriteLine();
+            Console.WriteLine("Eclipse project created!");
 
             if (File.Exists(".gitignore"))
             {
@@ -123,15 +116,19 @@ namespace GradleRio_Quickconvert
                 File.AppendAllLines(".gitignore", new string[] { "", "# Gradle cache", ".gradle", "", "# Eclipse settings", ".settings" });
             }
 
-            Console.WriteLine("Everything's all setup! Cleaning up tmp files, including this program!");
+            Console.WriteLine("Everything's all setup! Cleaning up temporary files and deleting this program.");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey(true);
 
             Directory.Delete("tmp", true);
-            File.Delete(System.Reflection.Assembly.GetEntryAssembly().Location);
+            try
+            {
+                Process.Start("cmd.exe", "/c ping localhost -n 3 > nul & del " + System.Reflection.Assembly.GetEntryAssembly().Location);
+            }
+            catch { /* Do nothing */ }
         }
 
-        static bool internetCheck()
+        static bool InternetCheck()
         {
             try
             {
@@ -144,7 +141,7 @@ namespace GradleRio_Quickconvert
             }
         }
 
-        static bool robotProjectExists()
+        static bool RobotProjectExists()
         {
             if (!Directory.Exists(System.AppDomain.CurrentDomain.BaseDirectory))
             {
@@ -172,7 +169,7 @@ namespace GradleRio_Quickconvert
             return result;
         }
 
-        static bool getGradleRioSetup(string teamNumber, string robotClass)
+        static bool GetGradleRioSetup(string teamNumber, string robotClass)
         {
             try
             {
@@ -184,7 +181,6 @@ namespace GradleRio_Quickconvert
                 }
 
                 ZipFile.ExtractToDirectory("tmp/DownloadPackage.zip","tmp");
-                //Directory.Move("tmp/DownloadPackage", System.AppDomain.CurrentDomain.BaseDirectory);
 
                 Directory.Move("tmp/DownloadPackage/.vscode", ".vscode");
                 Directory.Move("tmp/DownloadPackage/gradle", "gradle");
@@ -219,14 +215,13 @@ namespace GradleRio_Quickconvert
 
                 return true;
 
-            } catch (Exception e)
+            } catch
             {
-                Console.WriteLine(e.ToString());
                 return false;
             }
         }
 
-        static bool cleanEclipseProject()
+        static bool CleanEclipseProject()
         {
             try
             {
@@ -242,7 +237,7 @@ namespace GradleRio_Quickconvert
             }
         }
 
-        static bool buildProject()
+        static bool BuildProject()
         {
             try
             {
@@ -255,7 +250,7 @@ namespace GradleRio_Quickconvert
             }
         }
 
-        static bool createEclipseProject()
+        static bool CreateEclipseProject()
         {
             try
             {
