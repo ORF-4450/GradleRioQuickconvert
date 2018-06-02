@@ -177,7 +177,7 @@ namespace GradleRio_Quickconvert
 
                 using (var client = new WebClient())
                 {
-                    client.DownloadFile("https://github.com/MoSadie/GradleRioQuickconvert/blob/master/DownloadPackage.zip?raw=true", "tmp/DownloadPackage.zip");
+                    client.DownloadFile("https://github.com/MoSadie/GradleRioQuickconvert/blob/" + version + "/DownloadPackage.zip?raw=true", "tmp/DownloadPackage.zip");
                 }
 
                 ZipFile.ExtractToDirectory("tmp/DownloadPackage.zip","tmp");
