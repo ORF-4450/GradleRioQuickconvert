@@ -12,7 +12,7 @@ namespace GradleRio_Quickconvert
 {
     class Program
     {
-        public const string version = "2018.1.2";
+        public const string version = "2018.1.3";
         static void Main(string[] args)
         {
             Console.Clear();
@@ -174,7 +174,7 @@ namespace GradleRio_Quickconvert
         {
             try
             {
-                HttpWebRequest request = HttpWebRequest.CreateHttp("https://github.com/MoSadie/GradleRioQuickconvert");
+                HttpWebRequest request = HttpWebRequest.CreateHttp("https://github.com/ORF-4450/GradleRioQuickconvert");
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 return (response.StatusCode == HttpStatusCode.OK);
             } catch
@@ -219,12 +219,11 @@ namespace GradleRio_Quickconvert
 
                 using (var client = new WebClient())
                 {
-                    client.DownloadFile("https://github.com/MoSadie/GradleRioQuickconvert/blob/" + version + "/DownloadPackage.zip?raw=true", "tmp/DownloadPackage.zip");
+                    client.DownloadFile("https://github.com/ORF-4450/GradleRioQuickconvert/blob/" + version + "/DownloadPackage.zip?raw=true", "tmp/DownloadPackage.zip");
                 }
 
                 ZipFile.ExtractToDirectory("tmp/DownloadPackage.zip","tmp");
-
-                Directory.Move("tmp/DownloadPackage/.vscode", ".vscode");
+                
                 Directory.Move("tmp/DownloadPackage/gradle", "gradle");
 
                 foreach (string file in Directory.GetFiles("tmp/DownloadPackage"))
