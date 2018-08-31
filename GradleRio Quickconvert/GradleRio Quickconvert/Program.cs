@@ -12,7 +12,7 @@ namespace GradleRio_Quickconvert
 {
     class Program
     {
-        public const string version = "2018.1.3";
+        public const string version = "2019.0.1";
         static void Main(string[] args)
         {
             Console.Clear();
@@ -140,18 +140,8 @@ namespace GradleRio_Quickconvert
                 System.Environment.Exit(0);
             }
 
-            Console.WriteLine("Test build complete! Now creating new eclipse project.");
-
-            if (!CreateEclipseProject())
-            {
-                Console.WriteLine("Something went wrong creating the new eclipse project.");
-                Console.WriteLine("Please try again later. Press any key to exit.");
-                Console.ReadKey(true);
-                System.Environment.Exit(0);
-            }
-
-            Console.WriteLine("Eclipse project created!");
-
+            Console.WriteLine("Test build complete!");
+            
             if (File.Exists(".gitignore"))
             {
                 Console.WriteLine("Adding cache folders to .gitignore");
@@ -288,20 +278,6 @@ namespace GradleRio_Quickconvert
                 process.WaitForExit();
                 return true;
             } catch
-            {
-                return false;
-            }
-        }
-
-        static bool CreateEclipseProject()
-        {
-            try
-            {
-                var process = Process.Start("gradlew.bat", "eclipse");
-                process.WaitForExit();
-                return true;
-            }
-            catch
             {
                 return false;
             }
