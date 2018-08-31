@@ -12,4 +12,4 @@ A tool to quickly convert a 2018 FRC Java eclipse-based project to a 2018 Gradle
 * Automatically downloads and sets up Gradle and GradleRio
 * Automatically detects main robot class
 * Performs a build so all dependencies are downloaded.
-* Can automatically include [RobotLib](http://github.com/ORF-4450/RobotLib) (if on team 4450)
+* Can automatically include [RobotLib](http://github.com/ORF-4450/RobotLib) (Only if on team 4450)
